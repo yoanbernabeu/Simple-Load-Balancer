@@ -11,6 +11,9 @@ COPY entrypoint.sh /usr/local/bin/
 # Set permissions
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+# Set environment variables
+ENV BACKEND_NAME="backend"
+
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
