@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   loadbalancer:
-    image: johndoe/haproxy-letsencrypt:latest
+    image: yoanbernabeu/simple-load-balancer:latest
     ports:
       - "8080:80"
     environment:
@@ -18,14 +18,14 @@ services:
       - backend-network
 
   backend1:
-    image: demo-hello-backend:latest
+    image: yoanbernabeu/simple-load-balancer-demo:latest
     environment:
       - BACKEND_NAME=back1
     networks:
       - backend-network
 
   backend2:
-    image: demo-hello-backend:latest
+    image: yoanbernabeu/simple-load-balancer-demo:latest
     environment:
       - BACKEND_NAME=back2
     networks:
