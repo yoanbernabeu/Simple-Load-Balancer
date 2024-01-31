@@ -17,6 +17,5 @@ ENV BACKEND_NAME="backend"
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-# Expose ports
+# Expose port
 EXPOSE 80
-EXPOSE 443

@@ -1,0 +1,61 @@
+type: install
+name: SimpleLoadBalancer
+id: SimpleLoadBalancer
+
+description: |
+  Fichier d'Infrastructure As Code pour SimpleLoadBalancer
+
+settings:
+  fields:
+    - caption: DomaineName
+      type: string
+      name: DOMAIN_NAME
+      required: true
+      description: DomaineName
+    - caption: EmailAddress
+      type: string
+      name: EMAIL_ADDRESS
+      required: true
+      description: EmailAddress
+
+nodes:
+  - image: yoanbernabeu/simple-load-balancer:latest
+    count: 1
+    cloudlets: 8
+    fixedCloudlets: 1
+    nodeGroup: cp
+    displayName: Load Balancer
+    isSLBAccessEnabled: false
+    extip: true
+    env:
+      DOMAIN_NAME: "${settings.DOMAIN_NAME}"
+      EMAIL_ADDRESS: "${settings.EMAIL_ADDRESS}"
+      BACKEND1_URL: back1:80
+      BACKEND2_URL: back2:80
+      ENABLE_HTTPS: true
+    volumes:
+      - /etc/letsencrypt
+
+  - image: yoanbernabeu/simple-load-balancer-demo:latest
+    count: 1
+    cloudlets: 8
+    fixedCloudlets: 1
+    nodeGroup: back1
+    displayName: Back 1
+    isSLBAccessEnabled: false
+    env:
+      BACKEND_NAME: back1
+
+  - image: yoanbernabeu/simple-load-balancer-demo:latest
+    count: 1
+    cloudlets: 8
+    fixedCloudlets: 1
+    nodeGroup: back2
+    displayName: Back 2
+    isSLBAccessEnabled: false
+    env:
+      BACKEND_NAME: back2
+
+
+success: |
+  SimpleLoadBalancer est installé sur votre environnement Jelastic !
